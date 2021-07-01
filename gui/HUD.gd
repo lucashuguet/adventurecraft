@@ -1,8 +1,5 @@
 extends CanvasLayer
 
-func _ready():
-	$CenterContainer.hide()
-	
 func _process(_delta):
 	if Input.is_action_pressed("inventory"):
 		$CenterContainer.show()

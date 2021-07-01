@@ -10,5 +10,5 @@ script = ExtResource( 3 )
 [node name="HUD" parent="." instance=ExtResource( 2 )]
 
 [node name="player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 280, 280 )
+position = Vector2( 100, 100 )
 z_index = 1

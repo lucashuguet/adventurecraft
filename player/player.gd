@@ -7,19 +7,18 @@ var sword = load("res://items/diamond_sword.png")
 
 export var speed = 400
 export var weight = 15
-export var gravity = true
 export var jump = -1000
+export var gravity = true
  
 var screen_size
 var is_grounded
+var current_slot = 0
 var velocity = Vector2()
 
-var inventory = [[crosshair, "weapon" , 1], [sword, "weapon", 1]]
-var current_slot = 0
+var inventory = [[crosshair, "tool" , 1], [sword, "weapon", 1]]
 
 func _ready():
 	Input.set_custom_mouse_cursor(crosshair)
-	
 	screen_size = get_viewport_rect().size
 	$AnimatedSprite.play()
 
