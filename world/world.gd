@@ -80,7 +80,7 @@ func check_block(pos):
 	var top_cell = get_cell(get_tile(pos + Vector2(0, 80)))
 	var bottom_cell = get_cell(get_tile(pos + Vector2(0, -80)))
 
-	if bottom_cell == 10 or top_cell == 10: # ladder
+	if top_cell == 10 or bottom_cell == 10: # ladder
 		$player.velocity.y = 0
 		$player.weight = 3
 		$player.gravity = false
@@ -90,7 +90,7 @@ func check_block(pos):
 		elif not($player.is_on_floor()) and !lock:
 			$player.position.y += 3
 	else:
-		var check_cell = get_cell(get_tile(pos))
+		var check_cell = get_cell(get_tile(pos + Vector2(0, 85)))
 
 		if check_cell == 10:
 			if Input.is_action_pressed("up"):
@@ -138,7 +138,7 @@ func show_coordinate(pos):
 	$HUD/position.text = "Position: (" + str(coordinate.x) + ";" + str(-coordinate.y) + ")"
 
 	if coordinate.y > 64:
-		if get_tree().change_scene("res://levels/world.tscn") != OK:
+		if get_tree().change_scene("res://world/world.tscn") != OK:
 			print ("An unexpected error occured when trying to switch scene")
 
 func refresh_var():
@@ -153,7 +153,7 @@ func _process(_delta):
 	if Input.is_action_pressed("left_click"):
 		var m_pos = get_tile(get_global_mouse_position())
 		if m_pos.x >= 0 and check(m_pos, "break") and get_cell(m_pos) != -1:
-			if p_inv[p_slot][1] == "tool":
+			if p_inv[p_slot][1] == "tool" or p_inv[p_slot][1] == "block":
 				add_inventory(m_pos, p_inv)
 				set_cell(m_pos, -1)
 

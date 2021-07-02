@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/skin2d-2.png-b94f17c4b91cbf388fff16205e9a8b08.stex"
+path="res://.import/astrogoat-2.png-5762ff4a968eb1e5e8c4e625e326d478.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprite/skin2d-2.png"
-dest_files=[ "res://.import/skin2d-2.png-b94f17c4b91cbf388fff16205e9a8b08.stex" ]
+source_file="res://skins/astrogoat-2.png"
+dest_files=[ "res://.import/astrogoat-2.png-5762ff4a968eb1e5e8c4e625e326d478.stex" ]
 
 [params]
 
