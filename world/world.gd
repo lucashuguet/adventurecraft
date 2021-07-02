@@ -146,7 +146,7 @@ func refresh_var():
 	$player.inventory = p_inv
 
 func which_block_behind_goat(pos, who):
-	var block_pos = get_tile(pos) + Vector2(1, 2)
+	var block_pos = get_tile(pos) + Vector2(who.direction, 2)
 	who.rotate(get_cell(block_pos))
 
 func _process(_delta):
