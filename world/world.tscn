@@ -19,3 +19,5 @@ z_index = 1
 [node name="player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 85, 128 )
 z_index = 1
+
+[connection signal="which_block_behind" from="goat" to="." method="which_block_behind_goat"]

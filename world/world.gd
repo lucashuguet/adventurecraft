@@ -145,6 +145,10 @@ func refresh_var():
 	$player.current_slot = p_slot
 	$player.inventory = p_inv
 
+func which_block_behind_goat(pos, who):
+	var block_pos = get_tile(pos) + Vector2(1, 2)
+	who.rotate(get_cell(block_pos))
+
 func _process(_delta):
 	p_pos = $player.position
 	p_slot = $player.current_slot
