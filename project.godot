@@ -11,8 +11,10 @@ config_version=4
 [application]
 
 config/name="Minecraft2D"
+config/description="Minecraft 2D"
 run/main_scene="res://world/world.tscn"
-config/icon="res://icon.png"
+config/icon="res://icons/grass.png"
+config/windows_native_icon="res://icons/grass.ico"
 
 [debug]
 
