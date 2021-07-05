@@ -10,14 +10,24 @@ script = ExtResource( 3 )
 
 [node name="HUD" parent="." instance=ExtResource( 2 )]
 
-[node name="goat" parent="." groups=[
+[node name="mob" type="Node" parent="."]
+
+[node name="goat" parent="mob" groups=[
 "mob",
 ] instance=ExtResource( 4 )]
-position = Vector2( 100.113, 491 )
+position = Vector2( 128, -2176 )
 z_index = 1
+
+[node name="goat2" parent="mob" groups=[
+"mob",
+] instance=ExtResource( 4 )]
+position = Vector2( 3584, -2176 )
+z_index = 1
+direction = -1
 
 [node name="player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 85, 128 )
-z_index = 1
+position = Vector2( 128, -2432 )
+z_index = 2
 
-[connection signal="which_block_behind" from="goat" to="." method="which_block_behind_goat"]
+[connection signal="which_block_behind" from="mob/goat" to="." method="which_block_behind_goat"]
+[connection signal="which_block_behind" from="mob/goat2" to="." method="which_block_behind_goat"]

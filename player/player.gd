@@ -15,7 +15,7 @@ var is_grounded
 var current_slot = 0
 var velocity = Vector2()
 
-var inventory = [[crosshair, "tool" , 1, 1], [sword, "weapon", 1, 10]]
+var inventory = [[crosshair, "tool" , 1, 1], [sword, "weapon", 1, 10], [load("res://blocks/cobblestone.png"), "block", 2000, 4]]
 
 func _ready():
 	Input.set_custom_mouse_cursor(crosshair)

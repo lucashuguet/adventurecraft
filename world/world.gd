@@ -15,7 +15,7 @@ var planks = load("res://blocks/planks.png")
 var ladder = load("res://blocks/ladder.png")
 
 var blocks = [[bedrock, 0], [forcefield, 1], [dirt, 2], [grass, 3], [cobblestone, 4], [cobblestone, 4], [oak_log, 7], [oak_log, 7], [null, null], [planks, 9], [ladder, 10]]
-onready var slots = [$HUD/CenterContainer/inventory/slot1, $HUD/CenterContainer/inventory/slot2, $HUD/CenterContainer/inventory/slot3, $HUD/CenterContainer/inventory/slot4, $HUD/CenterContainer/inventory/slot5, $HUD/CenterContainer/inventory/slot6, $HUD/CenterContainer/inventory/slot7, $HUD/CenterContainer/inventory/slot8, $HUD/CenterContainer/inventory/slot9]
+onready var slots = [$HUD/inventory/slots/slot1, $HUD/inventory/slots/slot2, $HUD/inventory/slots/slot3, $HUD/inventory/slots/slot4, $HUD/inventory/slots/slot5, $HUD/inventory/slots/slot6, $HUD/inventory/slots/slot7, $HUD/inventory/slots/slot8, $HUD/inventory/slots/slot9]
 
 onready var p_pos = $player.position
 onready var p_slot = $player.current_slot
@@ -44,7 +44,7 @@ func check(pos, action):
 	var cell = get_cell(pos)
 
 	if action == "break":
-		return not cell == 0 or not cell == 1
+		return not cell == 0 and not cell == 1 and not cell == -1
 	elif action == "place":
 		if get_tile(p_pos) != pos_top and get_tile(p_pos) != pos and get_tile(p_pos) != pos_bottom:
 			if get_cell(pos) == -1:
@@ -61,40 +61,25 @@ func check(pos, action):
 				if get_cell(around) != -1:
 					return true
 
-func check_around(pos, action):
-	if get_cell(pos) == -1 and check(pos, action):
-		var around = pos + Vector2(1, 0)
-		if get_cell(around) != -1:
-			return true
-		around = pos + Vector2(-1, 0)
-		if get_cell(around) != -1:
-			return true
-		around = pos + Vector2(0, 1)
-		if get_cell(around) != -1:
-			return true
-		around = pos + Vector2(0, -1)
-		if get_cell(around) != -1:
-			return true
-
 func check_block(pos):
-	var top_cell = get_cell(get_tile(pos + Vector2(0, 80)))
-	var bottom_cell = get_cell(get_tile(pos + Vector2(0, -80)))
+	var top_cell = get_cell(get_tile(pos + Vector2(0, -75)))
+	var middle_cell = get_cell(get_tile(pos))
+	var bottom_cell = get_cell(get_tile(pos + Vector2(0, 75)))
 
-	if top_cell == 10 or bottom_cell == 10: # ladder
-		$player.velocity.y = 0
-		$player.weight = 3
-		$player.gravity = false
+	if top_cell == 10 or middle_cell == 10 or bottom_cell == 10: # ladder
+		no_gravity()
 
 		if Input.is_action_pressed("up") and !lock:
 			$player.position.y -= 3
 		elif not($player.is_on_floor()) and !lock:
 			$player.position.y += 3
 	else:
-		var check_cell = get_cell(get_tile(pos + Vector2(0, 85)))
+		var check_cell = get_cell(get_tile(pos + Vector2(0, 100)))
 
 		if check_cell == 10:
 			if Input.is_action_pressed("up"):
 				lock = true
+				no_gravity()
 			elif Input.is_action_just_released("up"):
 				gravity()
 		else:
@@ -104,6 +89,11 @@ func gravity():
 	lock = false
 	$player.weight = 15
 	$player.gravity = true
+	
+func no_gravity():
+	$player.velocity.y = 0
+	$player.weight = 3
+	$player.gravity = false
 
 func add_inventory(pos, inv):
 	var block = get_cell(pos)
@@ -137,7 +127,7 @@ func show_coordinate(pos):
 	var coordinate = tile.world_to_map(pos) + Vector2(0, 1)
 	$HUD/position.text = "Position: (" + str(coordinate.x) + ";" + str(-coordinate.y) + ")"
 
-	if coordinate.y > 64:
+	if coordinate.y > 0:
 		if get_tree().change_scene("res://world/world.tscn") != OK:
 			print ("An unexpected error occured when trying to switch scene")
 
@@ -156,14 +146,14 @@ func _process(_delta):
 
 	if Input.is_action_pressed("left_click"):
 		var m_pos = get_tile(get_global_mouse_position())
-		if m_pos.x >= 0 and check(m_pos, "break") and get_cell(m_pos) != -1:
+		if m_pos.x >= 0 and m_pos.x <= 64 and check(m_pos, "break") and get_cell(m_pos) != -1:
 			if p_inv[p_slot][1] == "tool" or p_inv[p_slot][1] == "block":
 				add_inventory(m_pos, p_inv)
 				set_cell(m_pos, -1)
 
 	if Input.is_action_pressed("right_click"):
 		var m_pos = get_tile(get_global_mouse_position())
-		if m_pos.x >= 0 and check(m_pos, "place"):
+		if m_pos.x >= 0 and m_pos.x <= 64 and m_pos.y >= -64 and check(m_pos, "place"):
 			if p_inv[p_slot][1] == "block":
 				if p_inv[p_slot][2] > -1:
 					set_cell(m_pos, p_inv[p_slot][3])
