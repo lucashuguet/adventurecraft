@@ -16,6 +16,10 @@ run/main_scene="res://world/world.tscn"
 config/icon="res://icons/grass.png"
 config/windows_native_icon="res://icons/grass.ico"
 
+[autoload]
+
+Variables="*res://world/Variables.gd"
+
 [debug]
 
 settings/fps/force_fps=144
@@ -25,6 +29,7 @@ settings/fps/force_fps=144
 window/size/width=1280
 window/size/height=720
 window/size/resizable=false
+window/size/fullscreen=true
 window/vsync/use_vsync=false
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
@@ -103,6 +108,11 @@ up={
 inventory={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"unicode":0,"echo":false,"script":null)
+ ]
+}
+generate={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":82,"unicode":0,"echo":false,"script":null)
  ]
 }
 

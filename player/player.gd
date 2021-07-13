@@ -1,28 +1,44 @@
 extends KinematicBody2D
 
 signal grounded_updated(is_grounded)
+signal place_block(pos, who)
+signal break_block(pos, who)
+signal inventory_change(inv)
+signal cursor_change(slot_index)
 
-var crosshair = load("res://gui/crosshair.png")
-var sword = load("res://items/diamond_sword.png")
+var crosshair = Variables.crosshair
+var sword = Variables.sword
+
+onready var tile = get_node("/root/world/TileMap")
 
 export var speed = 400
 export var weight = 15
 export var jump = -1000
 export var gravity = true
  
-var screen_size
 var is_grounded
 var current_slot = 0
 var velocity = Vector2()
+var lock = false
 
-var inventory = [[crosshair, "tool" , 1, 1], [sword, "weapon", 1, 10], [load("res://blocks/cobblestone.png"), "block", 2000, 4]]
+var inventory = [[sword, "weapon", 1, 10], [Variables.cobblestone, "block", 64, 4], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null]]
 
 func _ready():
-	Input.set_custom_mouse_cursor(crosshair)
-	screen_size = get_viewport_rect().size
 	$AnimatedSprite.play()
+	emit_signal("inventory_change", inventory)
+	cursor_process(inventory[current_slot][1])
 
-func inventory_process(type):
+func get_tile(pos):
+	return tile.world_to_map(pos)
+
+func get_cell(pos):
+	return tile.get_cell(pos.x, pos.y)
+
+func show_coordinate():
+	var coordinate = get_tile(position) + Vector2(0, 1)
+	$Camera2D/HUD/position.text = "Position: (" + str(coordinate.x) + ";" + str(-coordinate.y) + ")"
+
+func cursor_process(type):
 	if type == "block":
 		var cursor = ImageTexture.new()
 		var block: Image = inventory[current_slot][0].get_data()
@@ -30,22 +46,72 @@ func inventory_process(type):
 		cursor.create_from_image(block)                  
 		Input.set_custom_mouse_cursor(cursor)
 	else:
-		Input.set_custom_mouse_cursor(inventory[current_slot][0])
+		if not(inventory[current_slot][0]) == null:
+			Input.set_custom_mouse_cursor(inventory[current_slot][0])
+		else:
+			Input.set_custom_mouse_cursor(crosshair)
+	emit_signal("cursor_change", current_slot)
+	
+func check_block(pos):
+	var top_cell = get_cell(get_tile(pos + Vector2(0, -75)))
+	var middle_cell = get_cell(get_tile(pos))
+	var bottom_cell = get_cell(get_tile(pos + Vector2(0, 75)))
+
+	if top_cell == 10 or middle_cell == 10 or bottom_cell == 10: # ladder
+		no_gravity()
+
+		if Input.is_action_pressed("up") and !lock:
+			position.y -= 3
+		elif bottom_cell == 10 and !lock:
+			position.y += 3
+	else:
+		var check_cell = get_cell(get_tile(pos + Vector2(0, 100)))
+
+		if check_cell == 10:
+			if Input.is_action_pressed("up"):
+				lock = true
+				no_gravity()
+			elif Input.is_action_just_released("up"):
+				gravity_on()
+		else:
+			gravity_on()
+
+func gravity_on():
+	lock = false
+	weight = 15
+	gravity = true
+	
+func no_gravity():
+	velocity.y = 0
+	weight = 3
+	gravity = false
 
 func _process(_delta):
 	if Input.is_action_just_released("scroll_up"):
-		if current_slot == len(inventory)-1:
+		if current_slot == 5:
 			current_slot = 0
 		else:
 			current_slot = current_slot + 1
-		inventory_process(inventory[current_slot][1])
+		cursor_process(inventory[current_slot][1])
 		
 	if Input.is_action_just_released("scroll_down"):
 		if current_slot == 0:
-			current_slot = len(inventory)-1
+			current_slot = 5
 		else:
 			current_slot = current_slot - 1
-		inventory_process(inventory[current_slot][1])
+		cursor_process(inventory[current_slot][1])
+		
+	if $Camera2D/HUD.show_inv == false:
+		if Input.is_action_pressed("right_click"):
+			emit_signal("place_block", get_global_mouse_position(), get_node("."))
+			emit_signal("inventory_change", inventory)
+			
+		if Input.is_action_pressed("left_click"):
+			emit_signal("break_block", get_global_mouse_position(), get_node("."))
+			emit_signal("inventory_change", inventory)
+			cursor_process(inventory[current_slot][1])
+		
+	show_coordinate()
 	
 func _physics_process(_delta):
 	if Input.is_action_pressed("right"):
@@ -71,3 +137,13 @@ func _physics_process(_delta):
 
 	if was_grounded == null || is_grounded != was_grounded:
 		emit_signal("grounded_updated", is_grounded)
+		
+	check_block(position)
+	
+func inv_changed(inv):
+	inventory = inv
+	cursor_process(inventory[current_slot][1])
+
+
+func inventory_changed(inv):
+	pass # Replace with function body.

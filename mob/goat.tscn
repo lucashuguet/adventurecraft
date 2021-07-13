@@ -4,12 +4,17 @@
 [ext_resource path="res://mob/goat.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 75.01, 62.4235 )
+extents = Vector2( 54, 62 )
 
-[node name="goat" type="KinematicBody2D"]
+[node name="goat" type="KinematicBody2D" groups=[
+"mob",
+]]
 collision_layer = 4
 collision_mask = 2
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.1, 0.1 )

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/inventory2.png-9b450d5f50babb913641a5b4c7f45343.stex"
+path="res://.import/hotbar.png-c7a3070faa811bc5b995c5ff0e9fdb1d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://gui/inventory2.png"
-dest_files=[ "res://.import/inventory2.png-9b450d5f50babb913641a5b4c7f45343.stex" ]
+source_file="res://gui/hotbar.png"
+dest_files=[ "res://.import/hotbar.png-c7a3070faa811bc5b995c5ff0e9fdb1d.stex" ]
 
 [params]
 
