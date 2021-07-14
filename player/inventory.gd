@@ -27,7 +27,7 @@ func remove_item(item_index):
 	emit_signal("inv_changed", items)
 	return previousItem
 
-func inventory_change(inv):
+func _on_player_inventory_changed(inv):
 	items = inv
 	$CenterContainer/InventoryDisplay.update_inventory_display()
 	$CenterContainer2/HotbarDisplay.update_inventory_display()

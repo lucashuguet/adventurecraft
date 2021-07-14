@@ -16,6 +16,7 @@ var steps = []
 var iron = []
 var gold = []
 var diamond = []
+var tree = []
 
 var pause = false
 
@@ -47,6 +48,7 @@ func generate():
 		elif pos > max_height:
 			pos = max_height
 			
+		
 		set_cell(step -1, pos, 3)
 		set_cell(step -1, bedrock_height, 0)
 		
@@ -60,7 +62,7 @@ func generate():
 			for i in range(-(pos-1), -(forcefield_height -1)):
 				set_cell(step -1, -i, 1)
 		else:
-			steps.append(step -1)
+			steps.append([step -1, pos])
 
 	ore_generation()
 	
@@ -68,25 +70,39 @@ func ore_generation():
 	iron = []
 	gold = []
 	diamond = []
+	tree = []
 	
 	if steps != []:
+		# Tree			
+		for i in 10:
+			tree.append(steps[randi() % steps.size()][0])
+		
+		for i in tree:
+			for b in Variables.tree_model[0]:
+				var log_coord = Vector2(i, steps[i][1]) + b
+				set_cellv(log_coord, 6)
+				
+			for b in Variables.tree_model[1]:
+				var log_coord = Vector2(i, steps[i][1]) + b
+				set_cellv(log_coord, 8)
+			
 		# Iron
 		for i in 64:
-			iron.append(steps[randi() % steps.size()])
+			iron.append(steps[randi() % steps.size()][0])
 		
 		for i in iron:
 			set_cell(i, int(round(-rand_range(10, 25))), 13)
 	
 		# Gold
 		for i in 20:
-			gold.append(steps[randi() % steps.size()])
+			gold.append(steps[randi() % steps.size()][0])
 	
 		for i in gold:
 			set_cell(i, int(round(-rand_range(7, 16))), 14)
 		
 		# Diamond
 		for i in 16:
-			diamond.append(steps[randi() % steps.size()])
+			diamond.append(steps[randi() % steps.size()][0])
 	
 		for i in diamond:
 			set_cell(i, int(round(-rand_range(2, 6))), 12)

@@ -1,148 +1,101 @@
-[gd_scene load_steps=39 format=2]
+[gd_resource type="Theme" load_steps=13 format=2]
 
-[ext_resource path="res://skins/astrogoat-1.png" type="Texture" id=1]
-[ext_resource path="res://player/player.gd" type="Script" id=2]
-[ext_resource path="res://skins/astrogoat-2.png" type="Texture" id=3]
-[ext_resource path="res://skins/astrogoat-3.png" type="Texture" id=4]
-[ext_resource path="res://skins/astrogoat-4.png" type="Texture" id=5]
-[ext_resource path="res://skins/astrogoat-5.png" type="Texture" id=6]
-[ext_resource path="res://player/Camera2D.gd" type="Script" id=7]
-[ext_resource path="res://gui/inventory.png" type="Texture" id=8]
-[ext_resource path="res://gui/HUD.gd" type="Script" id=9]
-[ext_resource path="res://fonts/Minecraft.ttf" type="DynamicFontData" id=10]
-[ext_resource path="res://player/inventory.gd" type="Script" id=11]
-[ext_resource path="res://gui/InventoryDisplay.tscn" type="PackedScene" id=12]
-[ext_resource path="res://player/center.gd" type="Script" id=13]
-[ext_resource path="res://gui/HotbarDisplay.tscn" type="PackedScene" id=14]
-[ext_resource path="res://gui/hotbar.png" type="Texture" id=15]
-[ext_resource path="res://gui/HotbarSlotDisplay.tscn" type="PackedScene" id=16]
-[ext_resource path="res://gui/CurrentSlotDisplay.tscn" type="PackedScene" id=17]
-[ext_resource path="res://player/ItemsDisplay.gd" type="Script" id=18]
-[ext_resource path="res://player/CurrentSlot.gd" type="Script" id=19]
-
-[sub_resource type="DynamicFont" id=1]
-size = 18
-font_data = ExtResource( 10 )
-
-[sub_resource type="StreamTexture" id=2]
-flags = 4
-
-[sub_resource type="StyleBoxTexture" id=3]
-texture = SubResource( 2 )
-region_rect = Rect2( 0, 0, 310, 68 )
-margin_left = 6.10257
-margin_right = 8.64576
-margin_top = 13.509
-margin_bottom = 15.0
+[ext_resource path="res://fonts/ChiKareGo.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://gui/button.png" type="Texture" id=2]
+[ext_resource path="res://gui/button_hover.png" type="Texture" id=3]
+[ext_resource path="res://gui/button_disabled.png" type="Texture" id=4]
+[ext_resource path="res://gui/button_pressed.png" type="Texture" id=5]
+[ext_resource path="res://gui/lineEdit.png" type="Texture" id=6]
 
 [sub_resource type="StyleBoxTexture" id=4]
-texture = SubResource( 2 )
-region_rect = Rect2( 0, 0, 310, 68 )
-margin_left = 6.10257
-margin_right = 8.64576
-margin_top = 13.509
-margin_bottom = 15.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 300, 140 )
+margin_left = 30.0
+margin_right = 30.0
+margin_top = 30.0
+margin_bottom = 50.0
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 300, 140 )
+margin_left = 30.0
+margin_right = 30.0
+margin_top = 30.0
+margin_bottom = 50.0
 
 [sub_resource type="StyleBoxTexture" id=5]
-texture = SubResource( 2 )
-region_rect = Rect2( 0, 0, 310, 68 )
-margin_left = 6.10257
-margin_right = 8.64576
-margin_top = 13.509
-margin_bottom = 15.0
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 300, 140 )
+margin_left = 30.0
+margin_right = 30.0
+margin_top = 30.0
+margin_bottom = 50.0
+
+[sub_resource type="StyleBoxTexture" id=3]
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 20, 300, 120 )
+margin_left = 30.0
+margin_right = 30.0
+margin_top = 30.0
+margin_bottom = 30.0
 
 [sub_resource type="StyleBoxTexture" id=6]
-texture = SubResource( 2 )
-region_rect = Rect2( 0, 0, 310, 68 )
-margin_left = 6.10257
-margin_right = 8.64576
-margin_top = 13.509
-margin_bottom = 15.0
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 640, 160 )
+margin_left = 30.0
+margin_right = 30.0
+margin_top = 30.0
+margin_bottom = 30.0
 
-[sub_resource type="StreamTexture" id=7]
-flags = 4
+[sub_resource type="DynamicFont" id=2]
+size = 32
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
 
-[sub_resource type="StyleBoxTexture" id=8]
-texture = SubResource( 7 )
-region_rect = Rect2( 0, 0, 310, 68 )
-margin_left = 6.10257
-margin_right = 8.64576
-margin_top = 13.509
-margin_bottom = 15.0
-
-[sub_resource type="StreamTexture" id=9]
-flags = 4
-
-[sub_resource type="StreamTexture" id=10]
-flags = 4
-
-[sub_resource type="StreamTexture" id=11]
-flags = 4
-
-[sub_resource type="StreamTexture" id=12]
-flags = 4
-
-[sub_resource type="DynamicFont" id=13]
-size = 18
-font_data = ExtResource( 10 )
-
-[sub_resource type="StyleBoxFlat" id=14]
-bg_color = Color( 0, 0, 0, 0.588235 )
-border_width_left = 5
-border_width_top = 2
-border_width_right = 5
-border_width_bottom = 2
-border_color = Color( 0, 0, 0, 0.588235 )
-
-[sub_resource type="DynamicFont" id=15]
-size = 18
-use_mipmaps = true
-use_filter = true
-font_data = ExtResource( 10 )
-
-[sub_resource type="Theme" id=16]
-default_font = SubResource( 15 )
+[resource]
+default_font = SubResource( 2 )
 Button/colors/font_color = Color( 1, 1, 1, 1 )
-Button/colors/font_color_disabled = Color( 0.741176, 0.764706, 0.780392, 1 )
+Button/colors/font_color_disabled = Color( 0.607843, 0.607843, 0.607843, 1 )
 Button/colors/font_color_hover = Color( 1, 1, 1, 1 )
 Button/colors/font_color_pressed = Color( 1, 1, 1, 1 )
 Button/constants/hseparation = 2
-Button/fonts/font = SubResource( 1 )
-Button/styles/disabled = SubResource( 3 )
-Button/styles/focus = SubResource( 4 )
+Button/fonts/font = null
+Button/styles/disabled = SubResource( 4 )
+Button/styles/focus = SubResource( 1 )
 Button/styles/hover = SubResource( 5 )
-Button/styles/normal = SubResource( 6 )
-Button/styles/pressed = SubResource( 8 )
-CheckBox/colors/font_color = Color( 1, 1, 1, 1 )
-CheckBox/colors/font_color_disabled = Color( 0.741176, 0.764706, 0.780392, 1 )
-CheckBox/colors/font_color_hover = Color( 1, 1, 1, 1 )
-CheckBox/colors/font_color_hover_pressed = Color( 1, 1, 1, 1 )
-CheckBox/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+Button/styles/normal = SubResource( 1 )
+Button/styles/pressed = SubResource( 3 )
+CheckBox/colors/font_color = Color( 0, 0, 0, 1 )
+CheckBox/colors/font_color_disabled = Color( 0, 0, 0, 1 )
+CheckBox/colors/font_color_hover = Color( 0, 0, 0, 1 )
+CheckBox/colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
+CheckBox/colors/font_color_pressed = Color( 0, 0, 0, 1 )
 CheckBox/constants/check_vadjust = 0
 CheckBox/constants/hseparation = 4
 CheckBox/fonts/font = null
-CheckBox/icons/checked = SubResource( 9 )
-CheckBox/icons/radio_checked = SubResource( 10 )
-CheckBox/icons/radio_unchecked = SubResource( 11 )
-CheckBox/icons/unchecked = SubResource( 12 )
+CheckBox/icons/checked = null
+CheckBox/icons/radio_checked = null
+CheckBox/icons/radio_unchecked = null
+CheckBox/icons/unchecked = null
 CheckBox/styles/disabled = null
 CheckBox/styles/focus = null
 CheckBox/styles/hover = null
 CheckBox/styles/hover_pressed = null
 CheckBox/styles/normal = null
 CheckBox/styles/pressed = null
-CheckButton/colors/font_color = Color( 1, 1, 1, 1 )
-CheckButton/colors/font_color_disabled = Color( 0.741176, 0.764706, 0.780392, 1 )
-CheckButton/colors/font_color_hover = Color( 1, 1, 1, 1 )
-CheckButton/colors/font_color_hover_pressed = Color( 1, 1, 1, 1 )
-CheckButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+CheckButton/colors/font_color = Color( 0, 0, 0, 1 )
+CheckButton/colors/font_color_disabled = Color( 0, 0, 0, 1 )
+CheckButton/colors/font_color_hover = Color( 0, 0, 0, 1 )
+CheckButton/colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
+CheckButton/colors/font_color_pressed = Color( 0, 0, 0, 1 )
 CheckButton/constants/check_vadjust = 0
 CheckButton/constants/hseparation = 4
 CheckButton/fonts/font = null
-CheckButton/icons/off = SubResource( 12 )
-CheckButton/icons/off_disabled = SubResource( 11 )
-CheckButton/icons/on = SubResource( 9 )
-CheckButton/icons/on_disabled = SubResource( 10 )
+CheckButton/icons/off = null
+CheckButton/icons/off_disabled = null
+CheckButton/icons/on = null
+CheckButton/icons/on_disabled = null
 CheckButton/styles/disabled = null
 CheckButton/styles/focus = null
 CheckButton/styles/hover = null
@@ -183,7 +136,7 @@ FileDialog/icons/parent_folder = null
 FileDialog/icons/reload = null
 FileDialog/icons/toggle_hidden = null
 Fonts/fonts/large = null
-Fonts/fonts/normal = SubResource( 13 )
+Fonts/fonts/normal = null
 GraphEdit/colors/activity = Color( 0, 0, 0, 1 )
 GraphEdit/colors/grid_major = Color( 0, 0, 0, 1 )
 GraphEdit/colors/grid_minor = Color( 0, 0, 0, 1 )
@@ -263,29 +216,28 @@ ItemList/styles/cursor = null
 ItemList/styles/cursor_unfocused = null
 ItemList/styles/selected = null
 ItemList/styles/selected_focus = null
-Label/colors/font_color = Color( 1, 1, 1, 1 )
+Label/colors/font_color = Color( 0, 0, 0, 1 )
 Label/colors/font_color_shadow = Color( 0, 0, 0, 1 )
-Label/colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+Label/colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 Label/constants/line_spacing = 3
 Label/constants/shadow_as_outline = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
 Label/fonts/font = null
-Label/icons/ = null
-Label/styles/normal = SubResource( 14 )
-LineEdit/colors/clear_button_color = Color( 0, 0, 0, 1 )
-LineEdit/colors/clear_button_color_pressed = Color( 0, 0, 0, 1 )
-LineEdit/colors/cursor_color = Color( 0, 0, 0, 1 )
-LineEdit/colors/font_color = Color( 0, 0, 0, 1 )
-LineEdit/colors/font_color_selected = Color( 0, 0, 0, 1 )
-LineEdit/colors/font_color_uneditable = Color( 0, 0, 0, 1 )
-LineEdit/colors/selection_color = Color( 0, 0, 0, 1 )
-LineEdit/constants/minimum_spaces = 12
+Label/styles/normal = null
+LineEdit/colors/clear_button_color = Color( 1, 1, 1, 1 )
+LineEdit/colors/clear_button_color_pressed = Color( 1, 1, 1, 1 )
+LineEdit/colors/cursor_color = Color( 1, 1, 1, 1 )
+LineEdit/colors/font_color = Color( 1, 1, 1, 1 )
+LineEdit/colors/font_color_selected = Color( 1, 1, 1, 1 )
+LineEdit/colors/font_color_uneditable = Color( 0.552941, 0.180392, 0.180392, 1 )
+LineEdit/colors/selection_color = Color( 1, 1, 1, 1 )
+LineEdit/constants/minimum_spaces = 32
 LineEdit/fonts/font = null
 LineEdit/icons/clear = null
-LineEdit/styles/focus = null
-LineEdit/styles/normal = null
-LineEdit/styles/read_only = null
+LineEdit/styles/focus = SubResource( 6 )
+LineEdit/styles/normal = SubResource( 6 )
+LineEdit/styles/read_only = SubResource( 6 )
 LinkButton/colors/font_color = Color( 0, 0, 0, 1 )
 LinkButton/colors/font_color_hover = Color( 0, 0, 0, 1 )
 LinkButton/colors/font_color_pressed = Color( 0, 0, 0, 1 )
@@ -444,17 +396,17 @@ TextEdit/styles/completion = null
 TextEdit/styles/focus = null
 TextEdit/styles/normal = null
 TextEdit/styles/read_only = null
-ToolButton/colors/font_color = Color( 1, 1, 1, 1 )
-ToolButton/colors/font_color_disabled = Color( 0.741176, 0.764706, 0.780392, 1 )
-ToolButton/colors/font_color_hover = Color( 1, 1, 1, 1 )
-ToolButton/colors/font_color_pressed = Color( 1, 1, 1, 1 )
+ToolButton/colors/font_color = Color( 0, 0, 0, 1 )
+ToolButton/colors/font_color_disabled = Color( 0, 0, 0, 1 )
+ToolButton/colors/font_color_hover = Color( 0, 0, 0, 1 )
+ToolButton/colors/font_color_pressed = Color( 0, 0, 0, 1 )
 ToolButton/constants/hseparation = 3
 ToolButton/fonts/font = null
-ToolButton/styles/disabled = SubResource( 3 )
-ToolButton/styles/focus = SubResource( 3 )
-ToolButton/styles/hover = SubResource( 3 )
-ToolButton/styles/normal = SubResource( 3 )
-ToolButton/styles/pressed = SubResource( 8 )
+ToolButton/styles/disabled = null
+ToolButton/styles/focus = null
+ToolButton/styles/hover = null
+ToolButton/styles/normal = null
+ToolButton/styles/pressed = null
 TooltipLabel/colors/font_color = Color( 0, 0, 0, 1 )
 TooltipLabel/colors/font_color_shadow = Color( 0, 0, 0, 1 )
 TooltipLabel/constants/shadow_offset_x = 1
@@ -529,254 +481,3 @@ WindowDialog/fonts/title_font = null
 WindowDialog/icons/close = null
 WindowDialog/icons/close_highlight = null
 WindowDialog/styles/panel = null
-
-[sub_resource type="DynamicFont" id=17]
-size = 18
-font_data = ExtResource( 10 )
-
-[sub_resource type="SpriteFrames" id=18]
-animations = [ {
-"frames": [ ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 3 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 4 ), ExtResource( 4 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 5 ), ExtResource( 6 ) ],
-"loop": true,
-"name": "default",
-"speed": 2.0
-} ]
-
-[sub_resource type="RectangleShape2D" id=19]
-extents = Vector2( 25, 77.5 )
-
-[node name="player" type="KinematicBody2D"]
-rotation = -0.00116806
-input_pickable = true
-collision_mask = 2
-script = ExtResource( 2 )
-
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-limit_left = -64
-limit_right = 4224
-limit_bottom = 64
-smoothing_enabled = true
-drag_margin_top = 0.65
-drag_margin_bottom = 0.22
-editor_draw_screen = false
-script = ExtResource( 7 )
-
-[node name="Tween" type="Tween" parent="Camera2D"]
-
-[node name="HUD" type="CanvasLayer" parent="Camera2D"]
-script = ExtResource( 9 )
-
-[node name="position" type="Label" parent="Camera2D/HUD"]
-margin_right = 85.0
-margin_bottom = 19.0
-theme = SubResource( 16 )
-custom_fonts/font = SubResource( 17 )
-text = "Position"
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="center" type="CenterContainer" parent="Camera2D/HUD"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = 3.0
-margin_right = 1.0
-margin_bottom = 3.0
-script = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="InventoryContainer" type="TextureRect" parent="Camera2D/HUD/center"]
-margin_left = 212.0
-margin_top = 115.0
-margin_right = 1067.0
-margin_bottom = 605.0
-mouse_filter = 2
-texture = ExtResource( 8 )
-script = ExtResource( 11 )
-
-[node name="CenterContainer" type="CenterContainer" parent="Camera2D/HUD/center/InventoryContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -12.0
-margin_bottom = -12.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="InventoryDisplay" parent="Camera2D/HUD/center/InventoryContainer/CenterContainer" instance=ExtResource( 12 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 195.0
-margin_top = 140.0
-margin_right = 660.0
-margin_bottom = 350.0
-
-[node name="CenterContainer2" type="CenterContainer" parent="Camera2D/HUD/center/InventoryContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_right = 1.0
-margin_bottom = 380.0
-mouse_filter = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HotbarDisplay" parent="Camera2D/HUD/center/InventoryContainer/CenterContainer2" instance=ExtResource( 14 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 195.0
-margin_top = 415.0
-margin_right = 660.0
-margin_bottom = 455.0
-
-[node name="CenterBottom" type="CenterContainer" parent="Camera2D/HUD"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 6.0
-margin_top = -78.0
-margin_right = 540.0
-margin_bottom = 32.0
-rect_scale = Vector2( 0.5, 0.5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Hotbar" type="TextureRect" parent="Camera2D/HUD/CenterBottom"]
-margin_left = 4.0
-margin_right = 529.0
-margin_bottom = 110.0
-texture = ExtResource( 15 )
-stretch_mode = 6
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="ItemsDisplay" type="GridContainer" parent="Camera2D/HUD/CenterBottom/Hotbar"]
-margin_left = 30.0
-margin_top = 35.0
-margin_right = 495.0
-margin_bottom = 75.0
-custom_constants/vseparation = 45
-custom_constants/hseparation = 45
-columns = 6
-script = ExtResource( 18 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HotbarSlotDisplay" parent="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" instance=ExtResource( 16 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 40.0
-margin_bottom = 40.0
-
-[node name="HotbarSlotDisplay2" parent="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" instance=ExtResource( 16 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 85.0
-margin_right = 125.0
-margin_bottom = 40.0
-
-[node name="HotbarSlotDisplay3" parent="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" instance=ExtResource( 16 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 170.0
-margin_right = 210.0
-margin_bottom = 40.0
-
-[node name="HotbarSlotDisplay4" parent="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" instance=ExtResource( 16 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 255.0
-margin_right = 295.0
-margin_bottom = 40.0
-
-[node name="HotbarSlotDisplay5" parent="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" instance=ExtResource( 16 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 340.0
-margin_right = 380.0
-margin_bottom = 40.0
-
-[node name="HotbarSlotDisplay6" parent="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" instance=ExtResource( 16 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 425.0
-margin_right = 465.0
-margin_bottom = 40.0
-
-[node name="CurrentSlot" type="GridContainer" parent="Camera2D/HUD/CenterBottom/Hotbar"]
-margin_left = 5.0
-margin_top = 10.0
-margin_right = 520.0
-margin_bottom = 100.0
-custom_constants/vseparation = -5
-custom_constants/hseparation = -5
-columns = 6
-script = ExtResource( 19 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CurrentSlotDisplay" parent="Camera2D/HUD/CenterBottom/Hotbar/CurrentSlot" instance=ExtResource( 17 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_right = 90.0
-margin_bottom = 90.0
-
-[node name="CurrentSlotDisplay2" parent="Camera2D/HUD/CenterBottom/Hotbar/CurrentSlot" instance=ExtResource( 17 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 85.0
-margin_right = 175.0
-margin_bottom = 90.0
-
-[node name="CurrentSlotDisplay3" parent="Camera2D/HUD/CenterBottom/Hotbar/CurrentSlot" instance=ExtResource( 17 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 170.0
-margin_right = 260.0
-margin_bottom = 90.0
-
-[node name="CurrentSlotDisplay4" parent="Camera2D/HUD/CenterBottom/Hotbar/CurrentSlot" instance=ExtResource( 17 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 255.0
-margin_right = 345.0
-margin_bottom = 90.0
-
-[node name="CurrentSlotDisplay5" parent="Camera2D/HUD/CenterBottom/Hotbar/CurrentSlot" instance=ExtResource( 17 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 340.0
-margin_right = 430.0
-margin_bottom = 90.0
-
-[node name="CurrentSlotDisplay6" parent="Camera2D/HUD/CenterBottom/Hotbar/CurrentSlot" instance=ExtResource( 17 )]
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 425.0
-margin_right = 515.0
-margin_bottom = 90.0
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-scale = Vector2( 0.25, 0.25 )
-frames = SubResource( 18 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 19 )
-
-[connection signal="cursor_change" from="." to="Camera2D/HUD/CenterBottom/Hotbar/CurrentSlot" method="_on_player_cursor_change"]
-[connection signal="grounded_updated" from="." to="Camera2D" method="_on_player_grounded_updated"]
-[connection signal="inventory_changed" from="." to="Camera2D/HUD/center/InventoryContainer" method="_on_player_inventory_changed"]
-[connection signal="inventory_changed" from="." to="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" method="_on_player_inventory_changed"]
-[connection signal="inv_changed" from="Camera2D/HUD/center/InventoryContainer" to="." method="inv_changed"]
-[connection signal="inv_changed" from="Camera2D/HUD/center/InventoryContainer" to="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" method="_on_InventoryContainer_inv_changed"]

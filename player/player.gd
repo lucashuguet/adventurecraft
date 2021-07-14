@@ -3,7 +3,7 @@ extends KinematicBody2D
 signal grounded_updated(is_grounded)
 signal place_block(pos, who)
 signal break_block(pos, who)
-signal inventory_change(inv)
+signal inventory_changed(inv)
 signal cursor_change(slot_index)
 
 var crosshair = Variables.crosshair
@@ -20,12 +20,13 @@ var is_grounded
 var current_slot = 0
 var velocity = Vector2()
 var lock = false
+var flip_lerp = 0.25
 
 var inventory = [[sword, "weapon", 1, 10], [Variables.cobblestone, "block", 64, 4], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null]]
 
 func _ready():
 	$AnimatedSprite.play()
-	emit_signal("inventory_change", inventory)
+	emit_signal("inventory_changed", inventory)
 	cursor_process(inventory[current_slot][1])
 
 func get_tile(pos):
@@ -101,14 +102,33 @@ func _process(_delta):
 			current_slot = current_slot - 1
 		cursor_process(inventory[current_slot][1])
 		
+	if Input.is_action_pressed("slot1"):
+		current_slot = 0
+		cursor_process(inventory[current_slot][1])
+	if Input.is_action_pressed("slot2"):
+		current_slot = 1
+		cursor_process(inventory[current_slot][1])
+	if Input.is_action_pressed("slot3"):
+		current_slot = 2
+		cursor_process(inventory[current_slot][1])
+	if Input.is_action_pressed("slot4"):
+		current_slot = 3
+		cursor_process(inventory[current_slot][1])
+	if Input.is_action_pressed("slot5"):
+		current_slot = 4
+		cursor_process(inventory[current_slot][1])
+	if Input.is_action_pressed("slot6"):
+		current_slot = 5
+		cursor_process(inventory[current_slot][1])
+		
 	if $Camera2D/HUD.show_inv == false:
 		if Input.is_action_pressed("right_click"):
 			emit_signal("place_block", get_global_mouse_position(), get_node("."))
-			emit_signal("inventory_change", inventory)
+			emit_signal("inventory_changed", inventory)
 			
 		if Input.is_action_pressed("left_click"):
 			emit_signal("break_block", get_global_mouse_position(), get_node("."))
-			emit_signal("inventory_change", inventory)
+			emit_signal("inventory_changed", inventory)
 			cursor_process(inventory[current_slot][1])
 		
 	show_coordinate()
@@ -119,8 +139,12 @@ func _physics_process(_delta):
 	if Input.is_action_pressed("left"):
 		velocity.x = -speed
 
-	if velocity.x != 0:
-		$AnimatedSprite.flip_h = velocity.x < 0
+	if velocity.x < 0:
+		flip_lerp = -0.25
+	if velocity.x > 0:
+		flip_lerp = 0.25
+		
+	$AnimatedSprite.scale.x = lerp($AnimatedSprite.scale.x, flip_lerp, 0.1)
 
 	if gravity:
 		velocity.y = velocity.y + weight
@@ -143,7 +167,3 @@ func _physics_process(_delta):
 func inv_changed(inv):
 	inventory = inv
 	cursor_process(inventory[current_slot][1])
-
-
-func inventory_changed(inv):
-	pass # Replace with function body.

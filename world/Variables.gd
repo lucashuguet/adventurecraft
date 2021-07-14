@@ -37,3 +37,26 @@ var blocks = [
 	[iron_ore, 13], 
 	[gold_ore, 14]
 ]
+
+var tree_model = [
+	[
+		Vector2(0, -1), 
+		Vector2(0, -2)
+	], 
+	[
+		Vector2(-2, -3),
+		Vector2(-1, -3),
+		Vector2(0, -3),
+		Vector2(1, -3),
+		Vector2(2, -3),
+		Vector2(-2, -4),
+		Vector2(-1, -4),
+		Vector2(0, -4),
+		Vector2(1, -4),
+		Vector2(2, -4),
+		Vector2(-1, -5),
+		Vector2(0, -5),
+		Vector2(1, -5),
+		Vector2(0, -6),
+	]
+]

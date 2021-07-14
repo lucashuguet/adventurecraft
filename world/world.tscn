@@ -31,11 +31,6 @@ roughness = 4
 position = Vector2( 492, -2432 )
 z_index = 1
 
-[node name="goat2" parent="mob" instance=ExtResource( 4 )]
-position = Vector2( 3008, -2417 )
-z_index = 1
-direction = -1
-
 [node name="player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 128, -2432 )
 z_index = 2
