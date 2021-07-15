@@ -7,10 +7,10 @@ onready var tile = get_node("/root/world/TileMap")
 var weight = 15
 var speed = 100
 var velocity = Vector2()
-var flip_lerp = 0.1
+var flip_lerp = 0.25
 var top_block = false
 var wait_timer = false
-var health = 0
+var health = 20
 
 func _ready():
 	paper_flip(direction)
@@ -38,13 +38,19 @@ func rotate_goat():
 		rotate_raycast(-1)
 
 func jump():
-	velocity.y -= 60
+	velocity.y -= 40
 
 func _process(_delta):
 	$Sprite.scale.x = lerp($Sprite.scale.x, flip_lerp, 0.1)
 	if $Sprite.modulate != Color(1, 1, 1) and not wait_timer:
 		wait_timer = true
 		$ColorTimer.start()
+	
+	if health <= 0:
+		if direction == 1:
+			$AnimationPlayer.play("death1")
+		if direction == -1:
+			$AnimationPlayer.play("death-1")
 
 func _physics_process(_delta):
 	if is_on_wall():
@@ -52,7 +58,9 @@ func _physics_process(_delta):
 		else: rotate_goat()
 
 	velocity.y += weight
-	velocity.x = speed * direction
+	if not $AnimationPlayer.is_playing(): 
+		velocity.x = speed * direction
+	else: velocity.x = 0
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -62,3 +70,6 @@ func _on_Timer_timeout():
 func _on_ColorTimer_timeout():
 	$Sprite.modulate = Color(1, 1, 1)
 	wait_timer = false
+
+func _on_AnimationPlayer_animation_finished(_anim_name):
+	queue_free()

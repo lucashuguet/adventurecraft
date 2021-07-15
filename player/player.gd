@@ -127,9 +127,20 @@ func _process(_delta):
 			emit_signal("inventory_changed", inventory)
 			
 		if Input.is_action_pressed("left_click"):
-			emit_signal("break_block", get_global_mouse_position(), get_node("."))
-			emit_signal("inventory_changed", inventory)
-			cursor_process(inventory[current_slot][1])
+			if inventory[current_slot][1] == "weapon":
+				Input.action_release("left_click")
+				var mobs = get_tree().get_nodes_in_group("mob")
+				for i in mobs:
+					var sprite = i.get_node("Sprite")
+					if sprite.get_rect().has_point(sprite.get_local_mouse_position()):
+						if i.health != 0:
+							sprite.modulate = Color(1, 0, 0)
+							i.health -= inventory[current_slot][3]
+							break
+			else:
+				emit_signal("break_block", get_global_mouse_position(), get_node("."))
+				emit_signal("inventory_changed", inventory)
+				cursor_process(inventory[current_slot][1])
 		
 	show_coordinate()
 	

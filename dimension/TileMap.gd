@@ -28,6 +28,14 @@ func _process(_delta):
 	if not pause:
 		if Input.is_action_pressed("generate"):
 			Input.action_release("generate")
+			
+			var mobs = get_tree().get_nodes_in_group("mob")
+			for i in mobs:
+				i.position.y = -2432
+				
+			var players = get_tree().get_nodes_in_group("player")
+			for i in players:
+				i.position.y = -2432
 			generate()
 
 func generate():
@@ -65,7 +73,7 @@ func generate():
 			steps.append([step -1, pos])
 
 	ore_generation()
-	
+
 func ore_generation():
 	iron = []
 	gold = []
@@ -73,18 +81,25 @@ func ore_generation():
 	tree = []
 	
 	if steps != []:
-		# Tree			
-		for i in 10:
-			tree.append(steps[randi() % steps.size()][0])
+		# Tree
+		
+		tree.append(steps[int(round(rand_range(2, 5)))][0])
+		
+		for i in 20:
+			var random = int(round(rand_range(5, 10)))
+			var new_tree = tree[tree.size() - 1] + random
+			if new_tree < 63:
+				tree.append(new_tree)
 		
 		for i in tree:
-			for b in Variables.tree_model[0]:
-				var log_coord = Vector2(i, steps[i][1]) + b
-				set_cellv(log_coord, 6)
-				
-			for b in Variables.tree_model[1]:
-				var log_coord = Vector2(i, steps[i][1]) + b
-				set_cellv(log_coord, 8)
+			if i > 1 and i < 63:
+				for b in Variables.tree_model[0]:
+					var log_coord = Vector2(i, steps[i][1]) + b
+					set_cellv(log_coord, 6)
+					
+				for b in Variables.tree_model[1]:
+					var log_coord = Vector2(i, steps[i][1]) + b
+					set_cellv(log_coord, 8)
 			
 		# Iron
 		for i in 64:

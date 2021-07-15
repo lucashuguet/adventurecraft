@@ -14,7 +14,7 @@ config/name="Minecraft2D"
 config/description="Minecraft 2D"
 run/main_scene="res://world/Main.tscn"
 boot_splash/image="res://gui/boot-screen.png"
-config/icon="res://icons/grass.png"
+config/icon="res://icons/icon.png"
 config/windows_native_icon="res://icons/grass.ico"
 
 [autoload]

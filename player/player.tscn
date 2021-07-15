@@ -778,5 +778,5 @@ shape = SubResource( 19 )
 [connection signal="grounded_updated" from="." to="Camera2D" method="_on_player_grounded_updated"]
 [connection signal="inventory_changed" from="." to="Camera2D/HUD/center/InventoryContainer" method="_on_player_inventory_changed"]
 [connection signal="inventory_changed" from="." to="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" method="_on_player_inventory_changed"]
-[connection signal="inv_changed" from="Camera2D/HUD/center/InventoryContainer" to="." method="inv_changed"]
 [connection signal="inv_changed" from="Camera2D/HUD/center/InventoryContainer" to="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" method="_on_InventoryContainer_inv_changed"]
+[connection signal="inv_changed" from="Camera2D/HUD/center/InventoryContainer" to="." method="inv_changed"]

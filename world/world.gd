@@ -73,7 +73,6 @@ func _on_player_place_block(m_pos, who):
 				p_inv[p_slot][2] = p_inv[p_slot][2] -1
 				if p_inv[p_slot][2] == 0:
 					who.inventory[p_slot] = [null, "tool", null, null]
-					who.current_slot = 0
 					who.cursor_process(p_inv[0][1])
 
 func _on_player_break_block(m_pos, who):
