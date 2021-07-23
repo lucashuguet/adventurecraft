@@ -8,6 +8,7 @@ signal cursor_change(slot_index)
 
 var crosshair = Variables.crosshair
 var sword = Variables.sword
+var cobble = Variables.cobblestone
 
 onready var tile = get_node("/root/world/TileMap")
 
@@ -22,7 +23,7 @@ var velocity = Vector2()
 var lock = false
 var flip_lerp = 0.25
 
-var inventory = [[sword, "weapon", 1, 10], [Variables.cobblestone, "block", 64, 4], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null]]
+var inventory = [[sword, "weapon", 1, 10], [cobble, "block", 64, 4], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null]]
 
 func _ready():
 	$AnimatedSprite.play()
@@ -88,14 +89,14 @@ func no_gravity():
 	gravity = false
 
 func _process(_delta):
-	if Input.is_action_just_released("scroll_up"):
+	if Input.is_action_just_released("scroll_down"):
 		if current_slot == 5:
 			current_slot = 0
 		else:
 			current_slot = current_slot + 1
 		cursor_process(inventory[current_slot][1])
 		
-	if Input.is_action_just_released("scroll_down"):
+	if Input.is_action_just_released("scroll_up"):
 		if current_slot == 0:
 			current_slot = 5
 		else:

@@ -1,6 +1,6 @@
 extends GridContainer
 
-onready var inventory = get_node("/root/world/player/Camera2D/HUD/center/InventoryContainer")
+onready var inventory = get_parent().get_parent()
 
 func _ready():
 	inventory.connect("items_changed", self, "_on_items_changed")

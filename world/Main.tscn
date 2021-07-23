@@ -1,9 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://fonts/ChiKareGo.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://world/Main.gd" type="Script" id=2]
-[ext_resource path="res://world/world.tscn" type="PackedScene" id=3]
-[ext_resource path="res://world/Multiplayer.tscn" type="PackedScene" id=4]
 [ext_resource path="res://gui/background.png" type="Texture" id=5]
 
 [sub_resource type="DynamicFont" id=1]
@@ -25,8 +23,6 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-singleplayer = ExtResource( 3 )
-multiplayer_scene = ExtResource( 4 )
 
 [node name="TextureRect" type="TextureRect" parent="."]
 margin_right = 1280.0

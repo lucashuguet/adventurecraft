@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://gui/craftslot.gd" type="Script" id=1]
+[ext_resource path="res://gui/craftedslot.gd" type="Script" id=2]
+
+[node name="CrafingDisplay" type="GridContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_constants/vseparation = 130
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventorySlotDisplay" type="CenterContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemTextureRect" type="TextureRect" parent="InventorySlotDisplay"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+expand = true
+stretch_mode = 6
+
+[node name="InventorySlotDisplay2" type="CenterContainer" parent="."]
+margin_top = 170.0
+margin_right = 40.0
+margin_bottom = 210.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemTextureRect" type="TextureRect" parent="InventorySlotDisplay2"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+expand = true
+stretch_mode = 6
+
+[connection signal="new_item" from="InventorySlotDisplay" to="InventorySlotDisplay2" method="new_item"]

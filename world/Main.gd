@@ -1,7 +1,7 @@
 extends MarginContainer
 
-export var singleplayer: PackedScene
-export var multiplayer_scene: PackedScene
+onready var singleplayer = Scene.singleplayer
+onready var multiplayer_scene = Scene.multiplayer_s
 
 onready var selector_one = $CenterContainer/VBoxContainer/CenterContainer2/VBoxContainer/CenterContainer/HBoxContainer/Selector
 onready var selector_two = $CenterContainer/VBoxContainer/CenterContainer2/VBoxContainer/CenterContainer2/HBoxContainer/Selector
@@ -12,6 +12,7 @@ var current_selection = 0
 
 func _ready():
 	set_current_selection(0)
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_down") and current_selection < 3:
@@ -26,11 +27,9 @@ func _process(_delta):
 func handle_selection(_current_selection):
 	match _current_selection:
 		0: 
-			get_parent().add_child(singleplayer.instance())
-			queue_free()
+			Scene.change_scene(singleplayer)
 		1:
-			get_parent().add_child(multiplayer_scene.instance())
-			queue_free()
+			Scene.change_scene(multiplayer_scene)
 		2:
 			pass
 		3:

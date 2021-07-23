@@ -20,6 +20,7 @@ config/windows_native_icon="res://icons/grass.ico"
 [autoload]
 
 Variables="*res://world/Variables.gd"
+Scene="*res://world/Scene.gd"
 
 [debug]
 

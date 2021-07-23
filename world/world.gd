@@ -2,8 +2,16 @@ extends Node2D
 
 onready var tile = get_node("TileMap")
 
-var blocks = Variables.blocks
+onready var blocks = Variables.blocks
 var hitbox = true
+
+func _init():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	add_child(Scene.transition_node.instance())
+	var anim = get_node("TransitionScene").get_node("AnimationPlayer")
+	anim.play("backwards")
+	yield(anim, "animation_finished")
+	get_node("TransitionScene").queue_free()
 
 func get_tile(pos):
 	return tile.world_to_map(pos)

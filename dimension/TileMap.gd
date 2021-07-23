@@ -28,15 +28,24 @@ func _process(_delta):
 	if not pause:
 		if Input.is_action_pressed("generate"):
 			Input.action_release("generate")
+
+			get_parent().add_child(Scene.transition_node.instance())
+			var anim = get_parent().get_node("TransitionScene").get_node("AnimationPlayer")
+			anim.play("forwards")
+			yield(anim, "animation_finished")
 			
 			var mobs = get_tree().get_nodes_in_group("mob")
 			for i in mobs:
 				i.position.y = -2432
-				
+
 			var players = get_tree().get_nodes_in_group("player")
 			for i in players:
 				i.position.y = -2432
 			generate()
+			
+			anim.play("backwards")
+			yield(anim, "animation_finished")
+			get_parent().get_node("TransitionScene").queue_free()
 
 func generate():
 	clear()

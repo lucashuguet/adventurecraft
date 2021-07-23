@@ -1,7 +1,8 @@
 extends GridContainer
 
-
 func update_inv(inv):
+	get_parent().get_node("CurrentSlot").update_amount(inv)
+	
 	for i in inv.size() -18:
 		var slot = get_child(i)
 		slot.display_item(inv[i][0])
