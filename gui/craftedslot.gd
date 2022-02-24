@@ -12,6 +12,7 @@ func display_item(item):
 
 func new_item(item):
 	display_item(Variables.craft(item))
+	get_parent().get_node("InventorySlotDisplay").display_item([null, "tool", null, null])
 	
 func get_drag_data(_position):
 	var item = current_item

@@ -18,31 +18,33 @@ var diamond_ore = preload("res://blocks/diamond_ore.png")
 var iron_ore = preload("res://blocks/iron_ore.png")
 var gold_ore = preload("res://blocks/gold_ore.png")
 
-var slots_position = []
 
+# array: [ texture, tilemap_index, name, break_speed ]
 var blocks = [
-	[bedrock, 0, "bedrock"], 
-	[forcefield, 1, "forcefield"], 
-	[dirt, 2, "dirt"], 
-	[grass, 3, "grass"], 
-	[cobblestone, 4, "cobblestone"], 
-	[cobblestone, 4, "stone"], 
-	[oak_log, 7, "log"], 
-	[oak_log, 7, "log"], 
-	[null, null, "leaves"], # leaves
-	[planks, 9, "planks"], 
-	[ladder, 10, "ladder"], 
-	[coal_ore, 11, "coal_ore"], 
-	[diamond_ore, 12, "diamond_ore"], 
-	[iron_ore, 13, "iron_ore"], 
-	[gold_ore, 14, "gold_ore"]
+	[bedrock, 0, "bedrock", null], 
+	[forcefield, 1, "forcefield", null], 
+	[dirt, 2, "dirt", 0.05],
+	[grass, 3, "grass", 0.05],
+	[cobblestone, 4, "cobblestone", 0.4], 
+	[cobblestone, 4, "stone", 0],
+	[oak_log, 7, "log", 0.2], 
+	[oak_log, 7, "log", 0.2],
+	[null, null, "leaves", 0], # leaves
+	[planks, 9, "planks", 0.1],
+	[ladder, 10, "ladder", 0.1],
+	[coal_ore, 11, "coal_ore", 0.5],
+	[diamond_ore, 12, "diamond_ore", 0.5],
+	[iron_ore, 13, "iron_ore", 0.5],
+	[gold_ore, 14, "gold_ore", 0.5]
 ]
 
 var tree_model = [
+	# log
 	[
 		Vector2(0, -1), 
 		Vector2(0, -2)
-	], 
+	],
+	# leaves
 	[
 		Vector2(-2, -3),
 		Vector2(-1, -3),
@@ -61,7 +63,8 @@ var tree_model = [
 	]
 ]
 
-func craft(item):
+func craft(item: Array) -> Array: # return an array of the output item for the recipe
+	# array: [icon, name, amount, tilemap_id]
 	if item[0] == null:
 		return [null, "tool", null, null]
 	else:
@@ -70,5 +73,7 @@ func craft(item):
 		match item_name:
 			"log":
 				return [planks, "block", amount*4, 9]
+			"cobblestone":
+				return [diamond_ore, "block", amount*10, 12]
 			_:
-				return [null, "tool", null, null]
+				return item

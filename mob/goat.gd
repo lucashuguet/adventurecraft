@@ -4,8 +4,8 @@ export var direction = 1
 
 onready var tile = get_node("/root/world/TileMap")
 
-var weight = 15
-var speed = 100
+export var weight = 15
+export var speed = 100
 var velocity = Vector2()
 var flip_lerp = 0.1
 var top_block = false

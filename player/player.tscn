@@ -801,9 +801,13 @@ frames = SubResource( 19 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 20 )
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.001
+
 [connection signal="cursor_change" from="." to="Camera2D/HUD/CenterBottom/Hotbar/CurrentSlot" method="_on_player_cursor_change"]
 [connection signal="grounded_updated" from="." to="Camera2D" method="_on_player_grounded_updated"]
-[connection signal="inventory_changed" from="." to="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" method="_on_player_inventory_changed"]
 [connection signal="inventory_changed" from="." to="Camera2D/HUD/center/InventoryContainer" method="_on_player_inventory_changed"]
-[connection signal="inv_changed" from="Camera2D/HUD/center/InventoryContainer" to="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" method="_on_InventoryContainer_inv_changed"]
+[connection signal="inventory_changed" from="." to="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" method="_on_player_inventory_changed"]
 [connection signal="inv_changed" from="Camera2D/HUD/center/InventoryContainer" to="." method="inv_changed"]
+[connection signal="inv_changed" from="Camera2D/HUD/center/InventoryContainer" to="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" method="_on_InventoryContainer_inv_changed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
