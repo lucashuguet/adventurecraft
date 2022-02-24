@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://skins/astrogoat-1.png" type="Texture" id=1]
 [ext_resource path="res://player/player.gd" type="Script" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://player/ItemsDisplay.gd" type="Script" id=18]
 [ext_resource path="res://player/CurrentSlot.gd" type="Script" id=19]
 [ext_resource path="res://gui/CrafingDisplay.tscn" type="PackedScene" id=20]
+[ext_resource path="res://gui/GUI.tscn" type="PackedScene" id=21]
 
 [sub_resource type="DynamicFont" id=1]
 size = 18
@@ -556,6 +557,9 @@ input_pickable = true
 collision_mask = 2
 script = ExtResource( 2 )
 
+[node name="GUI" parent="." instance=ExtResource( 21 )]
+layer = 2
+
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 limit_left = -64
@@ -808,6 +812,6 @@ wait_time = 0.001
 [connection signal="grounded_updated" from="." to="Camera2D" method="_on_player_grounded_updated"]
 [connection signal="inventory_changed" from="." to="Camera2D/HUD/center/InventoryContainer" method="_on_player_inventory_changed"]
 [connection signal="inventory_changed" from="." to="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" method="_on_player_inventory_changed"]
-[connection signal="inv_changed" from="Camera2D/HUD/center/InventoryContainer" to="." method="inv_changed"]
 [connection signal="inv_changed" from="Camera2D/HUD/center/InventoryContainer" to="Camera2D/HUD/CenterBottom/Hotbar/ItemsDisplay" method="_on_InventoryContainer_inv_changed"]
+[connection signal="inv_changed" from="Camera2D/HUD/center/InventoryContainer" to="." method="inv_changed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

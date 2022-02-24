@@ -8,6 +8,7 @@ export var reach = 5
 var hitbox = true
 
 
+# set mouse mode and setup opening transition
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
@@ -38,7 +39,6 @@ func check(pos, action, p_pos) -> bool:
 		return check_place(pos, p_pos)
 	else: return false
 
-
 func check_place(pos, p_pos) -> bool:
 	var pos_bottom = p_pos + Vector2(0, 1)
 	var pos_top = p_pos + Vector2(0, -1)
@@ -58,7 +58,6 @@ func check_place(pos, p_pos) -> bool:
 			else: return false
 		else: return false
 	else: return false
-
 
 func check_break(pos, p_pos) -> bool:
 	var pos_bottom = pos + Vector2(0, 1)
@@ -80,6 +79,7 @@ func check_break(pos, p_pos) -> bool:
 	else: return false
 
 
+# add the block at given position to player inventory
 func add_inventory(pos, who) -> void:
 	var inv = who.inventory
 	var block = get_cell(pos) # id of the broken block
@@ -102,7 +102,8 @@ func add_inventory(pos, who) -> void:
 			break
 
 
-func break_block(pos, who) -> void: # destroy stages
+# break block step by step (8 stages)
+func break_block(pos, who) -> void:
 	var pos_id = break_tile.get_cellv(pos)
 	
 	if tile.get_cellv(pos) == 8:
@@ -125,6 +126,7 @@ func break_block(pos, who) -> void: # destroy stages
 				break_tile.set_cellv(pos, -1)
 
 
+# player signals
 func _on_player_place_block(m_pos, who):
 	# m_pos stands for mouse click position
 	m_pos = get_tile(m_pos)
@@ -142,7 +144,6 @@ func _on_player_place_block(m_pos, who):
 						if p_inv[p_slot][2] == 0:
 							who.inventory[p_slot] = [null, "tool", null, null]
 							who.cursor_process(p_inv[0][1])
-
 
 func _on_player_break_block(m_pos, who):
 	# m_pos stands for mouse click position

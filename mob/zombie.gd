@@ -41,7 +41,11 @@ func jump():
 	velocity.y -= 40
 
 func _process(_delta):
+	top_block = $RayTop.is_colliding()
+	
 	$Sprite.scale.x = lerp($Sprite.scale.x, flip_lerp, 0.1)
+	
+	# color animation when taking damage
 	if $Sprite.modulate != Color(1, 1, 1) and not wait_timer:
 		wait_timer = true
 		$ColorTimer.start()
@@ -58,14 +62,12 @@ func _physics_process(_delta):
 		else: rotate_goat()
 
 	velocity.y += weight
+	
 	if not $AnimationPlayer.is_playing(): 
 		velocity.x = speed * direction
 	else: velocity.x = 0
 	
 	velocity = move_and_slide(velocity, Vector2.UP)
-
-func _on_Timer_timeout():
-	top_block = $RayTop.is_colliding()
 
 func _on_ColorTimer_timeout():
 	$Sprite.modulate = Color(1, 1, 1)

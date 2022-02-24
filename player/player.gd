@@ -18,7 +18,7 @@ export var speed = 400
 export var weight = 15
 export var jump = -1000
 export var gravity = true
- 
+
 var is_grounded
 var current_slot = 0
 var velocity = Vector2()
@@ -28,29 +28,29 @@ var timerrunning = false
 
 # inventory of size => 24
 var inventory = [
-	[sword, "weapon", 1, 10], 
-	[cobble, "block", 64, 4], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
-	[null, "tool", null, null], 
+	[sword, "weapon", 1, 10],
+	[cobble, "block", 64, 4],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
 	[null, "tool", null, null]
 ]
 
@@ -84,7 +84,7 @@ func _physics_process(_delta):
 		flip_lerp = -0.25
 	if velocity.x > 0:
 		flip_lerp = 0.25
-		
+
 	$AnimatedSprite.scale.x = lerp($AnimatedSprite.scale.x, flip_lerp, 0.1) # paper like flip
 
 	if gravity:
@@ -102,7 +102,7 @@ func _physics_process(_delta):
 
 	if was_grounded == null || is_grounded != was_grounded:
 		emit_signal("grounded_updated", is_grounded)
-		
+
 	check_block(position)
 
 
@@ -116,7 +116,7 @@ func cursor_process(type):
 		var cursor = ImageTexture.new()
 		var block: Image = inventory[current_slot][0].get_data()
 		block.resize(32, 32)
-		cursor.create_from_image(block)                  
+		cursor.create_from_image(block)
 		Input.set_custom_mouse_cursor(cursor)
 	else:
 		if not(inventory[current_slot][0]) == null:
@@ -124,7 +124,7 @@ func cursor_process(type):
 		else:
 			Input.set_custom_mouse_cursor(crosshair)
 	emit_signal("cursor_change", current_slot)
-	
+
 func check_block(pos):
 	var top_cell = get_cell(get_tile(pos + Vector2(0, -75)))
 	var middle_cell = get_cell(get_tile(pos))
@@ -155,7 +155,7 @@ func gravity_on():
 	weight = 15
 	gravity = true
 
-	
+
 func no_gravity():
 	velocity.y = 0
 	weight = 3
@@ -167,7 +167,7 @@ func mouse_process() -> void:
 		if Input.is_action_pressed("right_click"): # place block
 			emit_signal("place_block", get_global_mouse_position(), get_node("."))
 			emit_signal("inventory_changed", inventory)
-			
+
 		if Input.is_action_pressed("left_click"): # attack or break
 			if inventory[current_slot][1] == "weapon": # attack
 				Input.action_release("left_click")
@@ -184,12 +184,12 @@ func mouse_process() -> void:
 					emit_signal("break_block", get_global_mouse_position(), get_node("."))
 					emit_signal("inventory_changed", inventory)
 					cursor_process(inventory[current_slot][1])
-					
+
 					var current_block = get_cell(get_tile(get_global_mouse_position()))
 					if not current_block == -1:
 						var wait = blocks[current_block][3]
-						
-						# avoid to start timer for instabreak and unbreakable
+
+						# avoid to start timer for instabreak and unbreakable(-èç_
 						if not wait == 0 and not wait == null:
 							timer.wait_time = wait
 							timer.start()
@@ -204,14 +204,14 @@ func hotbar_process() -> void:
 		else:
 			current_slot = current_slot + 1
 		cursor_process(inventory[current_slot][1])
-		
+
 	if Input.is_action_just_released("scroll_up"):
 		if current_slot == 0:
 			current_slot = 5
 		else:
 			current_slot = current_slot - 1
 		cursor_process(inventory[current_slot][1])
-		
+
 	# Numpad
 	if Input.is_action_pressed("slot1"):
 		current_slot = 0

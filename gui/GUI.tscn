@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://gui/PauseMenu.tscn" type="PackedScene" id=1]
+
+[node name="GUI" type="CanvasLayer"]
+pause_mode = 2
+
+[node name="PauseMenu" parent="." instance=ExtResource( 1 )]
+pause_mode = 2
+visible = false
