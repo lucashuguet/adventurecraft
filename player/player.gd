@@ -54,26 +54,30 @@ var inventory = [
 	[null, "tool", null, null]
 ]
 
+
+# start animation and setup inventory
 func _ready():
 	$AnimatedSprite.play()
 	emit_signal("inventory_changed", inventory)
 	cursor_process(inventory[current_slot][1])
 
 
+# usefull tilemap functions
 func get_tile(pos):
 	return tile.world_to_map(pos)
-
 
 func get_cell(pos):
 	return tile.get_cellv(pos)
 
 
+# process coordinates, hotbar and mouse
 func _process(_delta):
 	show_coordinate()
 	hotbar_process()
 	mouse_process()
 
 
+# movements and gravity process
 func _physics_process(_delta):
 	if Input.is_action_pressed("right"):
 		velocity.x = speed
@@ -103,14 +107,16 @@ func _physics_process(_delta):
 	if was_grounded == null || is_grounded != was_grounded:
 		emit_signal("grounded_updated", is_grounded)
 
-	check_block(position)
+	check_block(position) # do something if on a certain block
 
 
+# display coordinates in HUD
 func show_coordinate():
 	var coordinate = get_tile(position) + Vector2(0, 1)
 	$Camera2D/HUD/position.text = "Position: (" + str(coordinate.x) + ";" + str(-coordinate.y) + ")"
 
 
+# change cursor image according to current item
 func cursor_process(type):
 	if type == "block":
 		var cursor = ImageTexture.new()
@@ -125,6 +131,8 @@ func cursor_process(type):
 			Input.set_custom_mouse_cursor(crosshair)
 	emit_signal("cursor_change", current_slot)
 
+
+# do something if on a certain block
 func check_block(pos):
 	var top_cell = get_cell(get_tile(pos + Vector2(0, -75)))
 	var middle_cell = get_cell(get_tile(pos))
@@ -150,18 +158,21 @@ func check_block(pos):
 			gravity_on()
 
 
+# enable gravity
 func gravity_on():
 	lock = false
 	weight = 15
 	gravity = true
 
 
+# disable gravity
 func no_gravity():
 	velocity.y = 0
 	weight = 3
 	gravity = false
 
 
+# attack, break or place block
 func mouse_process() -> void:
 	if $Camera2D/HUD.show_inv == false: # if inventory panel is not open
 		if Input.is_action_pressed("right_click"): # place block
@@ -189,15 +200,16 @@ func mouse_process() -> void:
 					if not current_block == -1:
 						var wait = blocks[current_block][3]
 
-						# avoid to start timer for instabreak and unbreakable(-èç_
+						# avoid to start timer for instabreak and unbreakable block
 						if not wait == 0 and not wait == null:
 							timer.wait_time = wait
 							timer.start()
 							timerrunning = true
 
 
+# use numpad or scroll wheel to change current slot
 func hotbar_process() -> void:
-	# Scrollwheel
+	# Scroll wheel
 	if Input.is_action_just_released("scroll_down"):
 		if current_slot == 5:
 			current_slot = 0
@@ -233,10 +245,12 @@ func hotbar_process() -> void:
 		cursor_process(inventory[current_slot][1])
 
 
+# update inventory if it's change using drag and drop
 func inv_changed(inv):
 	inventory = inv
 	cursor_process(inventory[current_slot][1])
 
 
+# block breaking cooldown
 func _on_Timer_timeout():
 	timerrunning = false
