@@ -57,6 +57,7 @@ var inventory = [
 
 # start animation and setup inventory
 func _ready():
+	$Camera2D.limit_right = (64 * (tile.max_blocks + 2))
 	$AnimatedSprite.play()
 	emit_signal("inventory_changed", inventory)
 	cursor_process(inventory[current_slot][1])

@@ -133,7 +133,7 @@ func _on_player_place_block(m_pos, who):
 	var p_inv = who.inventory # player inventory
 	var p_slot = who.current_slot # player current slot
 	if get_tile(who.position).distance_to(m_pos) <= reach: # player reach
-		if m_pos.x >= 0 and m_pos.x <= 64 and m_pos.y >= -64: # world limits
+		if m_pos.x >= 0 and m_pos.x <= tile.max_blocks and m_pos.y >= -64: # world limits
 			if check(m_pos, "place", who.position):
 				if p_inv[p_slot][1] == "block": # if have a block in hand
 					if p_inv[p_slot][2] > -1:
@@ -151,7 +151,7 @@ func _on_player_break_block(m_pos, who):
 	var p_inv = who.inventory # player inventory
 	var p_slot = who.current_slot # player current slot
 	if get_tile(who.position).distance_to(m_pos) <= reach: # player reach
-		if m_pos.x >= 0 and m_pos.x <= 64: # world limits
+		if m_pos.x >= 0 and m_pos.x <= tile.max_blocks: # world limits
 			# run check and make sure that there is a block to break
 			if check(m_pos, "break", who.position) and get_cell(m_pos) != -1:
 				if p_inv[p_slot][1] == "tool" or p_inv[p_slot][1] == "block":

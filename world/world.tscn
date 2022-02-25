@@ -17,15 +17,7 @@ collision_layer = 2
 collision_mask = 5
 format = 1
 script = ExtResource( 6 )
-grid_size = 1
-max_blocks = 64
-pos = -32
-min_height = -34
-max_height = -30
-forcefield_height = -71
-dirt_height = 3
-max_roughness = 20
-roughness = 4
+max_blocks = 256
 
 [node name="break" type="TileMap" parent="TileMap"]
 tile_set = ExtResource( 7 )
