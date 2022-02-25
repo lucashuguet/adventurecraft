@@ -38,6 +38,8 @@ var blocks = [
 	[gold_ore, 14, "gold_ore", 0.5]
 ]
 
+
+# array of vectors to build a tree
 var tree_model = [
 	# log
 	[
@@ -63,7 +65,9 @@ var tree_model = [
 	]
 ]
 
-func craft(item: Array) -> Array: # return an array of the output item for the recipe
+
+# return an array of the output item for the recipe
+func craft(item: Array) -> Array:
 	# array: [icon, name, amount, tilemap_id]
 	if item[0] == null:
 		return [null, "tool", null, null]
