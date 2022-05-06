@@ -3,7 +3,7 @@ extends CanvasLayer
 var show_inv = false
 var moving_item = false
 
-onready var inventory = get_node("center/InventoryContainer")
+onready var inventory = get_node("Center/InventoryContainer")
 onready var hotbar = get_node("CenterBottom/Hotbar")
 
 

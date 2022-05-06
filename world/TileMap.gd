@@ -57,7 +57,10 @@ func _process(_delta):
 
 # generate world
 func generate():
-	clear() # clear all cells
+	# clear all cells
+	clear()
+	$break.clear()
+	
 	randomize() # change seed
 	steps = []
 

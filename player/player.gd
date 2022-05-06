@@ -9,6 +9,7 @@ signal cursor_change(slot_index)
 var crosshair = Variables.crosshair
 var sword = Variables.sword
 var cobble = Variables.cobblestone
+var dirt = Variables.dirt
 
 onready var tile = get_node("/root/world/TileMap")
 onready var timer = get_node("Timer")
@@ -30,7 +31,7 @@ var timerrunning = false
 var inventory = [
 	[sword, "weapon", 1, 10],
 	[cobble, "block", 64, 4],
-	[null, "tool", null, null],
+	[dirt, "block", 128, 2],
 	[null, "tool", null, null],
 	[null, "tool", null, null],
 	[null, "tool", null, null],

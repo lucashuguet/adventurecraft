@@ -47,8 +47,8 @@ margin_bottom = 220.0
 margin_right = 768.0
 margin_bottom = 220.0
 rect_min_size = Vector2( 616, 220 )
-custom_fonts/font = SubResource( 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
 text = "Adventure Craft"
 
 [node name="CenterContainer2" type="CenterContainer" parent="CenterContainer/VBoxContainer"]
@@ -73,8 +73,8 @@ margin_bottom = 41.0
 margin_right = 21.0
 margin_bottom = 41.0
 rect_min_size = Vector2( 21, 0 )
-custom_fonts/font = SubResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
 text = ">"
 
 [node name="OptionName" type="Label" parent="CenterContainer/VBoxContainer/CenterContainer2/VBoxContainer/CenterContainer/HBoxContainer"]
@@ -82,8 +82,8 @@ margin_left = 25.0
 margin_right = 235.0
 margin_bottom = 41.0
 rect_min_size = Vector2( 210, 0 )
-custom_fonts/font = SubResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Singleplayer"
 align = 1
 
@@ -100,8 +100,8 @@ margin_bottom = 41.0
 margin_right = 21.0
 margin_bottom = 41.0
 rect_min_size = Vector2( 21, 0 )
-custom_fonts/font = SubResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
 text = ">"
 
 [node name="OptionName" type="Label" parent="CenterContainer/VBoxContainer/CenterContainer2/VBoxContainer/CenterContainer2/HBoxContainer"]
@@ -109,8 +109,8 @@ margin_left = 25.0
 margin_right = 235.0
 margin_bottom = 41.0
 rect_min_size = Vector2( 210, 0 )
-custom_fonts/font = SubResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Multiplayer"
 align = 1
 
@@ -127,8 +127,8 @@ margin_bottom = 41.0
 margin_right = 21.0
 margin_bottom = 41.0
 rect_min_size = Vector2( 21, 0 )
-custom_fonts/font = SubResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
 text = ">"
 
 [node name="OptionName" type="Label" parent="CenterContainer/VBoxContainer/CenterContainer2/VBoxContainer/CenterContainer3/HBoxContainer"]
@@ -136,8 +136,8 @@ margin_left = 25.0
 margin_right = 235.0
 margin_bottom = 41.0
 rect_min_size = Vector2( 210, 0 )
-custom_fonts/font = SubResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Options"
 align = 1
 
@@ -154,8 +154,8 @@ margin_bottom = 41.0
 margin_right = 21.0
 margin_bottom = 41.0
 rect_min_size = Vector2( 21, 0 )
-custom_fonts/font = SubResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
 text = ">"
 
 [node name="OptionName" type="Label" parent="CenterContainer/VBoxContainer/CenterContainer2/VBoxContainer/CenterContainer4/HBoxContainer"]
@@ -163,7 +163,7 @@ margin_left = 25.0
 margin_right = 235.0
 margin_bottom = 41.0
 rect_min_size = Vector2( 210, 0 )
-custom_fonts/font = SubResource( 2 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Exit"
 align = 1

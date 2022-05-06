@@ -11,7 +11,7 @@ var hitbox = true
 # set mouse mode and setup opening transition
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
+
 	# loading animation
 	add_child(Scene.transition_node.instance())
 	var anim = get_node("TransitionScene").get_node("AnimationPlayer") # black curtain animation
@@ -40,12 +40,12 @@ func check(pos, action, p_pos) -> bool:
 	else: return false
 
 func check_place(pos, p_pos) -> bool:
-	var pos_bottom = p_pos + Vector2(0, 1)
-	var pos_top = p_pos + Vector2(0, -1)
-	
+	var pos_bottom = get_tile(p_pos) + Vector2(0, 1)
+	var pos_top = get_tile(p_pos) + Vector2(0, -1)
+
 	# print(get_tile(p_pos))
-	
-	if get_tile(p_pos) != pos_top and get_tile(p_pos) != pos and get_tile(p_pos) != pos_bottom:
+
+	if pos != pos_top and pos != get_tile(p_pos) and pos != pos_bottom and check_mob():
 		if get_cell(pos) == -1:
 			if get_cell(pos + Vector2(1, 0)) != -1: # right block
 				return true
@@ -63,7 +63,7 @@ func check_break(pos, p_pos) -> bool:
 	var pos_bottom = pos + Vector2(0, 1)
 	var pos_top = pos + Vector2(0, -1)
 	var cell = get_cell(pos)
-	
+
 	if get_tile(p_pos) != pos_top and get_tile(p_pos) != pos and get_tile(p_pos) != pos_bottom:
 		if get_cell(pos) != -1:
 			if get_cell(pos + Vector2(1, 0)) == -1:
@@ -78,6 +78,16 @@ func check_break(pos, p_pos) -> bool:
 		else: return false
 	else: return false
 
+func check_mob() -> bool:
+	var mobs = get_tree().get_nodes_in_group("mob")
+	
+	for mob in mobs:
+		var sprite = mob.get_node("Sprite")
+		if sprite.get_rect().has_point(sprite.get_local_mouse_position()):
+			return false
+			
+	return true
+
 
 # add the block at given position to player inventory
 func add_inventory(pos, who) -> void:
@@ -85,7 +95,7 @@ func add_inventory(pos, who) -> void:
 	var block = get_cell(pos) # id of the broken block
 	var block_name = blocks[block][0] # block name
 	var block_id = blocks[block][1] # id of the given block
-	
+
 	if block_name == null: # if the broken block gives nothing ex: leaves
 		return
 
@@ -93,9 +103,9 @@ func add_inventory(pos, who) -> void:
 		if inv[i][0] == block_name:
 			who.inventory[i][2] = inv[i][2] + 1
 			return
-	
+
 	var table = [block_name, "block", 1, block_id] # block template
-	
+
 	for i in range(inv.size()): # add template to first empty slot
 		if inv[i] == [null, "tool", null, null]:
 			who.inventory[i] = table
@@ -105,10 +115,10 @@ func add_inventory(pos, who) -> void:
 # break block step by step (8 stages)
 func break_block(pos, who) -> void:
 	var pos_id = break_tile.get_cellv(pos)
-	
+
 	if tile.get_cellv(pos) == 8:
 		pos_id = 8
-	
+
 	if tile.get_cellv(pos) != -1:
 		match pos_id:
 			-1: break_tile.set_cellv(pos, 0)
