@@ -9,43 +9,122 @@ signal cursor_change(slot_index)
 var crosshair = Variables.crosshair
 var sword = Variables.sword
 var cobble = Variables.cobblestone
+var dirt = Variables.dirt
 
 onready var tile = get_node("/root/world/TileMap")
+onready var timer = get_node("Timer")
+onready var blocks = Variables.blocks
 
 export var speed = 400
 export var weight = 15
 export var jump = -1000
 export var gravity = true
- 
+
 var is_grounded
 var current_slot = 0
 var velocity = Vector2()
 var lock = false
 var flip_lerp = 0.25
+var timerrunning = false
 
-var inventory = [[sword, "weapon", 1, 10], [cobble, "block", 64, 4], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null], [null, "tool", null, null]]
+# inventory of size => 24
+var inventory = [
+	[sword, "weapon", 1, 10],
+	[cobble, "block", 64, 4],
+	[dirt, "block", 128, 2],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null],
+	[null, "tool", null, null]
+]
 
+
+# start animation and setup inventory
 func _ready():
+	$Camera2D.limit_right = (64 * (tile.max_blocks + 2))
 	$AnimatedSprite.play()
 	emit_signal("inventory_changed", inventory)
 	cursor_process(inventory[current_slot][1])
 
+
+# usefull tilemap functions
 func get_tile(pos):
 	return tile.world_to_map(pos)
 
 func get_cell(pos):
-	return tile.get_cell(pos.x, pos.y)
+	return tile.get_cellv(pos)
 
+
+# process coordinates, hotbar and mouse
+func _process(_delta):
+	show_coordinate()
+	hotbar_process()
+	mouse_process()
+
+
+# movements and gravity process
+func _physics_process(_delta):
+	if Input.is_action_pressed("right"):
+		velocity.x = speed
+	if Input.is_action_pressed("left"):
+		velocity.x = -speed
+
+	if velocity.x < 0:
+		flip_lerp = -0.25
+	if velocity.x > 0:
+		flip_lerp = 0.25
+
+	$AnimatedSprite.scale.x = lerp($AnimatedSprite.scale.x, flip_lerp, 0.1) # paper like flip
+
+	if gravity:
+		velocity.y = velocity.y + weight
+
+	if Input.is_action_pressed("jump") and is_on_floor():
+		velocity.y = jump
+
+	velocity = move_and_slide(velocity, Vector2.UP)
+
+	velocity.x = lerp(velocity.x, 0, 0.2)
+
+	var was_grounded = is_grounded
+	is_grounded = is_on_floor()
+
+	if was_grounded == null || is_grounded != was_grounded:
+		emit_signal("grounded_updated", is_grounded)
+
+	check_block(position) # do something if on a certain block
+
+
+# display coordinates in HUD
 func show_coordinate():
 	var coordinate = get_tile(position) + Vector2(0, 1)
 	$Camera2D/HUD/position.text = "Position: (" + str(coordinate.x) + ";" + str(-coordinate.y) + ")"
 
+
+# change cursor image according to current item
 func cursor_process(type):
 	if type == "block":
 		var cursor = ImageTexture.new()
 		var block: Image = inventory[current_slot][0].get_data()
 		block.resize(32, 32)
-		cursor.create_from_image(block)                  
+		cursor.create_from_image(block)
 		Input.set_custom_mouse_cursor(cursor)
 	else:
 		if not(inventory[current_slot][0]) == null:
@@ -53,7 +132,9 @@ func cursor_process(type):
 		else:
 			Input.set_custom_mouse_cursor(crosshair)
 	emit_signal("cursor_change", current_slot)
-	
+
+
+# do something if on a certain block
 func check_block(pos):
 	var top_cell = get_cell(get_tile(pos + Vector2(0, -75)))
 	var middle_cell = get_cell(get_tile(pos))
@@ -78,31 +159,74 @@ func check_block(pos):
 		else:
 			gravity_on()
 
+
+# enable gravity
 func gravity_on():
 	lock = false
 	weight = 15
 	gravity = true
-	
+
+
+# disable gravity
 func no_gravity():
 	velocity.y = 0
 	weight = 3
 	gravity = false
 
-func _process(_delta):
+
+# attack, break or place block
+func mouse_process() -> void:
+	if $Camera2D/HUD.show_inv == false: # if inventory panel is not open
+		if Input.is_action_pressed("right_click"): # place block
+			emit_signal("place_block", get_global_mouse_position(), get_node("."))
+			emit_signal("inventory_changed", inventory)
+
+		if Input.is_action_pressed("left_click"): # attack or break
+			if inventory[current_slot][1] == "weapon": # attack
+				Input.action_release("left_click")
+				var mobs = get_tree().get_nodes_in_group("mob")
+				for i in mobs:
+					var sprite = i.get_node("Sprite")
+					if sprite.get_rect().has_point(sprite.get_local_mouse_position()):
+						if i.health != 0:
+							sprite.modulate = Color(1, 0, 0)
+							i.health -= inventory[current_slot][3]
+							break
+			else: # break
+				if not timerrunning: # wait break cooldown
+					emit_signal("break_block", get_global_mouse_position(), get_node("."))
+					emit_signal("inventory_changed", inventory)
+					cursor_process(inventory[current_slot][1])
+
+					var current_block = get_cell(get_tile(get_global_mouse_position()))
+					if not current_block == -1:
+						var wait = blocks[current_block][3]
+
+						# avoid to start timer for instabreak and unbreakable block
+						if not wait == 0 and not wait == null:
+							timer.wait_time = wait
+							timer.start()
+							timerrunning = true
+
+
+# use numpad or scroll wheel to change current slot
+func hotbar_process() -> void:
+	# Scroll wheel
 	if Input.is_action_just_released("scroll_down"):
 		if current_slot == 5:
 			current_slot = 0
 		else:
 			current_slot = current_slot + 1
 		cursor_process(inventory[current_slot][1])
-		
+
 	if Input.is_action_just_released("scroll_up"):
 		if current_slot == 0:
 			current_slot = 5
 		else:
 			current_slot = current_slot - 1
 		cursor_process(inventory[current_slot][1])
-		
+
+	# Numpad
 	if Input.is_action_pressed("slot1"):
 		current_slot = 0
 		cursor_process(inventory[current_slot][1])
@@ -121,61 +245,14 @@ func _process(_delta):
 	if Input.is_action_pressed("slot6"):
 		current_slot = 5
 		cursor_process(inventory[current_slot][1])
-		
-	if $Camera2D/HUD.show_inv == false:
-		if Input.is_action_pressed("right_click"):
-			emit_signal("place_block", get_global_mouse_position(), get_node("."))
-			emit_signal("inventory_changed", inventory)
-			
-		if Input.is_action_pressed("left_click"):
-			if inventory[current_slot][1] == "weapon":
-				Input.action_release("left_click")
-				var mobs = get_tree().get_nodes_in_group("mob")
-				for i in mobs:
-					var sprite = i.get_node("Sprite")
-					if sprite.get_rect().has_point(sprite.get_local_mouse_position()):
-						if i.health != 0:
-							sprite.modulate = Color(1, 0, 0)
-							i.health -= inventory[current_slot][3]
-							break
-			else:
-				emit_signal("break_block", get_global_mouse_position(), get_node("."))
-				emit_signal("inventory_changed", inventory)
-				cursor_process(inventory[current_slot][1])
-		
-	show_coordinate()
-	
-func _physics_process(_delta):
-	if Input.is_action_pressed("right"):
-		velocity.x = speed
-	if Input.is_action_pressed("left"):
-		velocity.x = -speed
 
-	if velocity.x < 0:
-		flip_lerp = -0.25
-	if velocity.x > 0:
-		flip_lerp = 0.25
-		
-	$AnimatedSprite.scale.x = lerp($AnimatedSprite.scale.x, flip_lerp, 0.1)
 
-	if gravity:
-		velocity.y = velocity.y + weight
-
-	if Input.is_action_pressed("jump") and is_on_floor():
-		velocity.y = jump
-
-	velocity = move_and_slide(velocity, Vector2.UP)
-
-	velocity.x = lerp(velocity.x, 0, 0.2)
-
-	var was_grounded = is_grounded
-	is_grounded = is_on_floor()
-
-	if was_grounded == null || is_grounded != was_grounded:
-		emit_signal("grounded_updated", is_grounded)
-		
-	check_block(position)
-	
+# update inventory if it's change using drag and drop
 func inv_changed(inv):
 	inventory = inv
 	cursor_process(inventory[current_slot][1])
+
+
+# block breaking cooldown
+func _on_Timer_timeout():
+	timerrunning = false
